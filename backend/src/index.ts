@@ -6,6 +6,13 @@ import dotenv from 'dotenv';
 import pool from './database/connection';
 import authRoutes from './routes/auth';
 import postsRoutes from './routes/posts';
+import usersRoutes from './routes/users';
+import commentsRoutes from './routes/comments';
+import messagesRoutes from './routes/messages';
+import notificationsRoutes from './routes/notifications';
+import mediaRoutes from './routes/media';
+import searchRoutes from './routes/search';
+import reportsRoutes from './routes/reports';
 
 dotenv.config();
 
@@ -31,9 +38,16 @@ app.get('/health', (req, res) => {
   res.json({ status: 'healthy', timestamp: new Date().toISOString() });
 });
 
-// Routes
+// API Routes
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/posts', postsRoutes);
+app.use('/api/v1/users', usersRoutes);
+app.use('/api/v1/comments', commentsRoutes);
+app.use('/api/v1/messages', messagesRoutes);
+app.use('/api/v1/notifications', notificationsRoutes);
+app.use('/api/v1/media', mediaRoutes);
+app.use('/api/v1/search', searchRoutes);
+app.use('/api/v1/reports', reportsRoutes);
 
 // 404 Handler
 app.use((req, res) => {
@@ -50,9 +64,20 @@ app.use((err: any, req: any, res: any, next: any) => {
 });
 
 app.listen(port, () => {
-  console.log(`\n🚀 Noctis Social API running on port ${port}`);
-  console.log(`📊 Database: ${process.env.DATABASE_URL}`);
-  console.log(`🔐 Environment: ${process.env.NODE_ENV}\n`);
+  console.log(`\n\ud83d\ude80 Noctis Social API - Production Ready`);
+  console.log(`\ud83d\udcca Database: ${process.env.DATABASE_URL}`);
+  console.log(`\ud83d\udd10 Environment: ${process.env.NODE_ENV}`);
+  console.log(`\ud83c\udfaf Port: ${port}\n`);
+  console.log('\ud83d\udcc4 Available Routes:');
+  console.log('  POST   /api/v1/auth/register');
+  console.log('  POST   /api/v1/auth/login');
+  console.log('  POST   /api/v1/posts');
+  console.log('  GET    /api/v1/posts/feed/me');
+  console.log('  GET    /api/v1/users/:userId');
+  console.log('  POST   /api/v1/messages');
+  console.log('  GET    /api/v1/notifications/me');
+  console.log('  POST   /api/v1/reports');
+  console.log('  GET    /api/v1/search/posts');
 });
 
 export default app;
